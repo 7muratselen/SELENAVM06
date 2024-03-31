@@ -1,0 +1,53 @@
+﻿@using SELENAVM06.Entities
+@model List<UrunlerXMLS>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>Here is the list of products:</p>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Ürün Kodu</th>
+            <th>Ürün Barkodu</th>
+            <th>Varyant Kodu</th>
+            <th>Ana Ürün mü?</th>          
+            <th>Ürün Adı</th>
+            <th>Ürün Marka</th>
+            <th>Ürün Rengi</th>
+            <th>Ürün Modeli</th>
+            <th>Ürün Adeti</th>
+            <th>Ürün Fiyati</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var urun in Model)
+        {
+            <tr>
+                <td>@urun.UrunKodu</td>
+                <td>@urun.UrunBarkodu</td>
+                <td>@urun.VaryantKodu</td>
+                <td>@(urun.ParentChild ? "Evet" : "Hayır")</td>               
+                <td>@urun.UrunAdi</td>
+                <td>@urun.UrunMarka</td>
+                <td>@urun.UrunRengi</td>
+                <td>@urun.UrunModeli</td>
+                <td>@urun.UrunAdeti</td>
+                <td>@urun.UrunFiyati</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+}
+@* Bu kod, her ürün için ParentChild özelliğini kontrol eder. Eğer ürün bir ana ürünse, alt ürünlerini bir liste olarak görüntüler.
+ Alt ürünler, ana ürünle aynı UrunKodu değerine sahip ve ParentChild özelliği false olan ürünlerdir.
+Not: Bu kodun çalışabilmesi için, UrunlerXMLS modelinizin UrunKodu ve ParentChild özelliklerine sahip olması gerekiyor.
+Ayrıca, bu kod, her ana ürünün UrunKodu değerinin benzersiz olduğunu varsayar.
+Eğer bu varsayım doğru değilse, bu kodu uygun şekilde değiştirmeniz gerekecektir. *@
