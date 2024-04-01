@@ -23,7 +23,7 @@ namespace SELENAVM06.Controllers.XMLS
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             List<UrunlerXMLS> allUrunler = new List<UrunlerXMLS>();
 
@@ -35,7 +35,11 @@ namespace SELENAVM06.Controllers.XMLS
                 _logger.LogInformation("XML_XA dosyası okunuyor, lütfen bekleyin...");
 
                 // XML_XA Gumush Tedarikçisinin XML dosyasını oku
-                UrunXmlElemet_XA.Products XML_XA = _xmlReaderService.ReadXml_XA(@"C:/Code/XML/XA_Ornek.xml");
+                // Yerel dosyadan okuma kodu yorum satırı haline getirildi
+                // UrunXmlElemet_XA.Products XML_XA = _xmlReaderService.ReadXml_XA(@"C:/Code/XML/XA_Ornek.xml");
+
+                // URL'den okuma kodu eklendi
+                UrunXmlElemet_XA.Products XML_XA = await _xmlReaderService.ReadXml_XA("https://www.gumush.com/xml/?R=6575&K=bfb9&AltUrun=1&TamLink=1&Dislink=1&Imgs=1&start=0&limit=99999&pass=8RRqo6ZF&nocache&currency=TL&Stok=1");
 
                 _logger.LogInformation("XML_XA dosyası başarıyla okundu. Veritabanına kaydediliyor...");
 
@@ -108,7 +112,12 @@ namespace SELENAVM06.Controllers.XMLS
                 _logger.LogInformation("XML_BI dosyası okunuyor, lütfen bekleyin...");
 
                 // XML_BI Bigpoint Tedarikçisinin XML dosyasını oku
-                Urunler XML_BI = _xmlReaderService.ReadXml_BI(@"C:/Code/XML/BI_Ornek.xml");
+                // Yerel dosyadan okuma kodu yorum satırı haline getirildi
+                // Urunler XML_BI = _xmlReaderService.ReadXml_BI(@"C:/Code/XML/BI_Ornek.xml");
+
+                // URL'den okuma kodu eklendi
+                Urunler XML_BI = await _xmlReaderService.ReadXml_BI("https://www.bigpoint.com.tr/xml.php?bayi=a4v274a4&minumum=siparis");
+
 
                 _logger.LogInformation("XML_BI dosyası başarıyla okundu. Veritabanına kaydediliyor...");
 
@@ -151,6 +160,7 @@ namespace SELENAVM06.Controllers.XMLS
 
             return View(allUrunler);
         }
+
     }
 }
 
